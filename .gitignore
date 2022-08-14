@@ -1,0 +1,10 @@
+/target
+.cargo/config.toml
+Cargo.lock
+SDL2test.lib
+SDL2main.lib
+SDL2.lib
+SDL2.dll
+res/wall_test.jpg
+res/brick.png
+res/bricksx64.png
