@@ -21,8 +21,6 @@ pub fn projection(m: &Vec<[f32; 3]>) -> Vec<[f32; 3]>
         let z = LAMBDA * z0 - 1.0;
 
 
-        x += HALF_WIDTH as f32;
-        y += HALF_HEIGHT as f32;
 
 
         m_out.push([x, y, z]);

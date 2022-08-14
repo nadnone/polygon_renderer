@@ -10,7 +10,7 @@ pub struct EdgeFunc;
 
 impl EdgeFunc {
 
-    pub fn draw(m: &Vec<[f32; 3]>, canvas: &mut Canvas<Window>)
+    pub fn draw(m: &Vec<[f32; 3]>, canvas: &mut Canvas<Window>, colors: &Vec<[u8; 3]>)
     {
 
         for i in (0..m.len()).step_by(3) {
@@ -42,9 +42,10 @@ impl EdgeFunc {
 
                     if inside_triangle 
                     {
+                        let [r, g, b] = colors[0];
 
-                        canvas.set_draw_color(sdl2::pixels::Color::RGB(255, 0, 0));
-                        canvas.draw_point(sdl2::rect::Point::new(px, py)).unwrap();
+                        canvas.set_draw_color(sdl2::pixels::Color::RGB(r, g, b));
+                        canvas.draw_point(sdl2::rect::Point::new(px + HALF_WIDTH, py + HALF_HEIGHT)).unwrap();
 
                         
                     }
@@ -64,9 +65,10 @@ impl EdgeFunc {
         let delta_ab = soustraction_vectors(b, a);
         let delta_ap = soustraction_vectors(p, a);
 
-        let normal = cross_product_2x2(delta_ab, delta_ap);
+        let triangle_normal = cross_product_2x2(delta_ab, delta_ap);
+        
 
-        return normal > 0.0;
+        return triangle_normal > 0.0;
     }
 
     fn _check_min_max(v0: [f32; 3], v1: [f32; 3], v2: [f32; 3]) -> (i32, i32, i32, i32)

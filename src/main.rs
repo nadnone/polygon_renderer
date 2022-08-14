@@ -4,6 +4,7 @@ mod gameloop;
 mod edge_function;
 mod maths;
 mod projection;
+mod wavefront_parser;
 
 use crate::{gameloop::gameloop, misc::*};
 
@@ -16,7 +17,7 @@ pub fn main()
     let mut sdl_context = sdl2::init().unwrap();
     let video_subsystem = sdl_context.video().unwrap();
 
-    let wind = video_subsystem.window("RayCaster", WIDTH as u32, HEIGHT as u32)
+    let wind = video_subsystem.window("Polygon Render", WIDTH as u32, HEIGHT as u32)
         .position_centered()
         //fullscreen_desktop()
         .build()
