@@ -14,7 +14,7 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[u8; 3]>)
     let mut re = Regex::new(r"f\s(\d+).(\d+).(\d+)\s(\d+).(\d+).(\d+)\s(\d+).(\d+).(\d+)").unwrap();
 
     let mut vertices_indices: Vec<[i32; 3]> = Vec::new();
-    let mut textures_indices: Vec<[i32; 3]> = Vec::new();
+    //let mut textures_indices: Vec<[i32; 3]> = Vec::new();
 
     for capture in re.captures_iter(str) {
 
@@ -25,14 +25,14 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[u8; 3]>)
 
         vertices_indices.push([v1, v2, v3]);
 
-
+        /* 
         let t1: i32 = capture[2].to_string().parse().unwrap();
         let t2: i32 = capture[5].to_string().parse().unwrap();
         let t3: i32 = capture[8].to_string().parse().unwrap();
 
         textures_indices.push([t1, t2, t3]);
 
-
+*/
     }
 
     // capture the vertices

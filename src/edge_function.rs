@@ -1,7 +1,4 @@
-use sdl2::render::Canvas;
-use sdl2::video::Window;
-
-use crate::{maths::{soustraction_vectors, cross_product_2x2}, misc::{HALF_WIDTH, HALF_HEIGHT}};
+use crate::maths::{soustraction_vectors, cross_product_vec3, dot};
 
 
 
@@ -10,8 +7,10 @@ pub struct EdgeFunc;
 
 impl EdgeFunc {
 
-    pub fn draw(m: &Vec<[f32; 3]>, canvas: &mut Canvas<Window>, colors: &Vec<[u8; 3]>)
+    pub fn draw(m: &Vec<[f32; 3]>, colors: &Vec<[u8; 3]>) -> Vec<(f32, f32, f32, [u8; 3])>
     {
+
+        let mut m_out: Vec<(f32, f32, f32, [u8; 3])> = Vec::new();
 
         for i in (0..m.len()).step_by(3) {
             
@@ -21,7 +20,15 @@ impl EdgeFunc {
             let v1 = m[i + 1];
             let v2 = m[i + 2];
 
+            
+            // to check less pixels at time
             let (min_x, max_x, min_y, max_y) = Self::_check_min_max(v0, v1, v2);
+
+
+            /* backface check */
+            let backtest = dot( cross_product_vec3( soustraction_vectors(v1, v0), soustraction_vectors(v2, v0) ), v0 );
+            if backtest < 0.0 { continue };
+
 
 
             for px in min_x..max_x+1 {
@@ -44,10 +51,7 @@ impl EdgeFunc {
                     {
                         let [r, g, b] = colors[0];
 
-                        canvas.set_draw_color(sdl2::pixels::Color::RGB(r, g, b));
-                        canvas.draw_point(sdl2::rect::Point::new(px + HALF_WIDTH, py + HALF_HEIGHT)).unwrap();
-
-                        
+                        m_out.push((px as f32, py as f32, v0[2], [r, g, b]))
                     }
       
                 }
@@ -57,6 +61,8 @@ impl EdgeFunc {
 
         }
 
+        return m_out;
+
     }
 
     fn _edge_check(p: [f32; 3], a: [f32; 3], b: [f32; 3]) -> bool
@@ -65,10 +71,10 @@ impl EdgeFunc {
         let delta_ab = soustraction_vectors(b, a);
         let delta_ap = soustraction_vectors(p, a);
 
-        let triangle_normal = cross_product_2x2(delta_ab, delta_ap);
-        
+        let cross = cross_product_vec3(delta_ab, delta_ap)[2];
 
-        return triangle_normal > 0.0;
+        return cross < 0.0;
+        
     }
 
     fn _check_min_max(v0: [f32; 3], v1: [f32; 3], v2: [f32; 3]) -> (i32, i32, i32, i32)

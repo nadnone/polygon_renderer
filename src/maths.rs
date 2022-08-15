@@ -1,5 +1,3 @@
-use std::vec;
-
 pub fn soustraction_vectors(a: [f32; 3], b: [f32; 3]) -> [f32; 3]
 {
 
@@ -13,12 +11,22 @@ pub fn soustraction_vectors(a: [f32; 3], b: [f32; 3]) -> [f32; 3]
     return res;
 }
 
-pub fn cross_product_2x2(a: [f32; 3], b: [f32; 3]) -> f32
+pub fn cross_product_vec3(a: [f32; 3], b: [f32; 3]) -> [f32; 3]
 {
+    let mut cross = [0.0, 0.0, 0.0];
 
-    return (a[0] * b[1]) - (a[1] * b[0]);
+    cross[0] = (a[1] * b[2]) - (a[2] * b[1]);
+    cross[1] = (a[2] * b[0]) - (a[0] * b[2]);
+    cross[2] = (a[0] * b[1]) - (a[1] * b[0]);
 
+    return cross;
 }
+
+pub fn dot(a: [f32; 3], b :[f32; 3]) -> f32
+{
+     return (a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2]);
+}
+
 
 pub fn scale_vec3(a: [f32; 3], factor: f32) -> [f32; 3]
 {
@@ -31,17 +39,38 @@ pub fn scale_vec3(a: [f32; 3], factor: f32) -> [f32; 3]
     return res;
 }
 
-pub fn rotate_x(a: Vec<[f32; 3]>, angle: f32) -> Vec<[f32; 3]>
+pub fn rotate(a: Vec<[f32; 3]>, angle: f32, axe: char) -> Vec<[f32; 3]>
 {
 
     let cos = angle.cos();
     let sin = angle.sin();
 
-    let matrix_rot_x = [
-        [1.0, 0.0, 0.0],
-        [0.0, cos, -sin],
-        [0.0, sin, cos]
-    ];
+    let matrix_rot;
+
+    if axe == 'y'
+    {
+        matrix_rot = [
+            [cos, -sin, 0.0],
+            [sin, cos, 0.0],
+            [0.0, 0.0, 1.0]
+        ];
+    }
+    else if axe == 'x'
+    {
+        matrix_rot = [
+            [1.0, 0.0, 0.0],
+            [0.0, cos, -sin],
+            [0.0, sin, cos]
+        ];
+    }
+    else 
+    {
+        matrix_rot = [
+            [cos, -sin, 0.0],
+            [sin, cos, 0.0],
+            [0.0, 0.0, 1.0]
+        ];
+    }
 
     let mut m_out = Vec::new();
 
@@ -65,7 +94,7 @@ pub fn rotate_x(a: Vec<[f32; 3]>, angle: f32) -> Vec<[f32; 3]>
                 
                 for k in 0..3 {
 
-                    res[i][j] += kernel[i][k] * matrix_rot_x[k][j];
+                    res[i][j] += kernel[i][k] * matrix_rot[k][j];
 
                 }
 

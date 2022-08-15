@@ -2,7 +2,7 @@ use sdl2::EventPump;
 use sdl2::render::Canvas;
 use sdl2::video::Window;
 
-use crate::maths::{scale_vec3, rotate_x};
+use crate::maths::{scale_vec3, rotate};
 use crate::wavefront_parser;
 use crate::{misc::*, edge_function::EdgeFunc};
 use crate::projection::projection;
@@ -26,7 +26,7 @@ pub fn gameloop(canvas: &mut Canvas<Window>, _event_pump: &mut EventPump, _sdl_c
 
     for i in 0..cube_vertives.len() {
 
-        cube_vertives[i] = scale_vec3(cube_vertives[i], 200.0);
+        cube_vertives[i] = scale_vec3(cube_vertives[i], 100.0);
         
     }
 
@@ -42,15 +42,15 @@ pub fn gameloop(canvas: &mut Canvas<Window>, _event_pump: &mut EventPump, _sdl_c
 
 
 
-        cube_vertives = rotate_x(cube_vertives, 0.01);
+        cube_vertives = rotate(cube_vertives, 0.1, 'x');
+        cube_vertives = rotate(cube_vertives, 0.1, 'y');
 
 
 
+        let for_projection = EdgeFunc::draw(&cube_vertives, &data_cube.1);
 
-        let projection_mat = projection(&cube_vertives);
-        EdgeFunc::draw(&projection_mat, canvas, &data_cube.1);
 
-        
+        projection(for_projection, canvas);
         canvas.present();
         
 
