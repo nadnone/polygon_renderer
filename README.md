@@ -14,7 +14,7 @@
     - [x] Normals
     - [ ] Textures
 
-- [x] Shading with Phong model
+- [ ] Shading with Phong model
     - [ ] Textures
     - [x] Ambient, diffuse, specular
     
