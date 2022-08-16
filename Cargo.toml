@@ -11,5 +11,5 @@ image = "0.24.3"
 regex = "1"
 
 [[bin]]
-name = "ray_caster"
+name = "polygon_renderer"
 path = "src/main.rs"
