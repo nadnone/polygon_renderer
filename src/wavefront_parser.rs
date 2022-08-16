@@ -2,7 +2,7 @@ use std::fs;
 use regex::Regex;
 
 
-pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>))
+pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>, f32))
 {
 
     let mut data = fs::read_to_string(filename).unwrap();
@@ -152,11 +152,6 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (Vec<[f32; 3]>, Ve
 
 
     // colors 
-    
-    //get the pwd
-    re_1 = Regex::new(r".\w+\.obj").unwrap().find(filename).unwrap();
-    let obj_name =  &filename[re_1.start()..re_1.end()];
-    let pwd = filename.replace(obj_name, "");
 
     // read the mtl file
     data = fs::read_to_string(format!("./assets/{}", mtl_filename)).unwrap();
@@ -198,7 +193,14 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (Vec<[f32; 3]>, Ve
 
 
     }
+    
+
+    // the materials and the mtl file
+    re_1 = Regex::new(r"Ns\s([0-9\.]+)").unwrap().find(str).unwrap();
+    let string_stuff = &data[re_1.start()+3..re_1.end()];
+    let specular_exponent: f32 = string_stuff.to_string().parse().unwrap();
         
+
     // take the first material diffuse
     re = Regex::new(r"newmtl\s(\w+)\n.*\n.*\n.*\nKs\s([0-9\.]+)\s([0-9\.]+)\s([0-9\.]+)\s").unwrap();
 
@@ -218,7 +220,8 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (Vec<[f32; 3]>, Ve
     }
 
 
-    return (triangles, normals, (ambiants, diffuse, specular));
+
+    return (triangles, normals, (ambiants, diffuse, specular, specular_exponent));
 
 
 }

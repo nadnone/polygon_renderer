@@ -5,7 +5,7 @@ pub struct Rasterizer;
 
 impl Rasterizer {
 
-    pub fn draw(m: &Vec<[f32; 3]>, normals: &Vec<[f32; 3]>, phong_data: &(Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>)) -> Vec<(f32, f32, f32, [u8; 3])>
+    pub fn draw(m: &Vec<[f32; 3]>, normals: &Vec<[f32; 3]>, phong_data: &(Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>, f32)) -> Vec<(f32, f32, f32, [u8; 3])>
     {
 
         let mut m_out: Vec<(f32, f32, f32, [u8; 3])> = Vec::new();
@@ -24,8 +24,8 @@ impl Rasterizer {
 
 
             /* backface check */
-            //let backtest = produit_scalair( produit_vectoriel( soustraction_vectors(v1, v0), soustraction_vectors(v2, v0) ), v0 );
-            //if backtest < 0.0 { continue };
+            let backtest = produit_scalair( produit_vectoriel( soustraction_vectors(v1, v0), soustraction_vectors(v2, v0) ), v0 );
+            if backtest < 0.0 { continue };
 
 
 

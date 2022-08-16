@@ -52,6 +52,7 @@ pub fn produit_scalair(a: [f32; 3], b :[f32; 3]) -> f32
 }
 
 
+
 pub fn scalair(a: [f32; 3], factor: f32) -> [f32; 3]
 {
     let mut res = [0.0, 0.0, 0.0];
