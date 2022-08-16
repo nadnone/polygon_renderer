@@ -7,7 +7,12 @@
 ## TODO :D
 ----------------------
 - [x] Drawing a cube
-- [x] Load Wavefront files
+- [] Load Wavefront files
+    - [] Loading all data
+    - [x] Specular, ambient, diffuse
+    - [x] Vertices
+    - [x] Normals
+
 - [x] Shading with Phong model
 - [ ] Using GPU instead of CPU
 - [ ] Moving through the world
