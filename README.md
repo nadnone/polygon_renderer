@@ -7,8 +7,8 @@
 ## TODO :D
 ----------------------
 - [x] Drawing a cube
-- [] Load Wavefront files
-    - [] Loading all data
+- [ ] Load Wavefront files
+    - [ ] Loading all data
     - [x] Specular, ambient, diffuse
     - [x] Vertices
     - [x] Normals
