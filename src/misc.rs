@@ -3,6 +3,10 @@ pub const HEIGHT:f32 = 640.0;
 pub const HALF_HEIGHT: i32 = HEIGHT as i32 / 2;
 pub const HALF_WIDTH: i32 = WIDTH as i32 / 2;
 
+
+pub const WIDTH_LOGIC: i32 = HALF_WIDTH/2;
+pub const HEIGHT_LOGIC: i32 = HALF_HEIGHT/2;
+
 pub const FPS: f32 = 1.0/60.0;
 
 pub const FOV: f32 = 68.0 * 3.1415 / 180.0;

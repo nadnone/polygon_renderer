@@ -21,10 +21,10 @@ pub fn projection(m: Vec<(f32, f32, f32, [u8; 3])>, canvas: &mut Canvas<Window>)
 
         let x = (HEIGHT/WIDTH) * f * x0;
         let y = f * y0;
-        let _z = LAMBDA * z0 - 1.0;
+        let _z = LAMBDA * (z0 - 1.0); // 1.0 = Z_NEAR
 
         canvas.set_draw_color(sdl2::pixels::Color::RGB(colors[0], colors[1], colors[2]));
-        canvas.draw_point(sdl2::rect::Point::new(x as i32 + HALF_WIDTH/2, y as i32 + HALF_HEIGHT/2)).unwrap();
+        canvas.draw_point(sdl2::rect::Point::new(x as i32 + WIDTH_LOGIC /2, y as i32 + HEIGHT_LOGIC /2)).unwrap(); // HALFWIDTH/2 car logicalsize à halfwidth
 
 
     }

@@ -2,7 +2,7 @@ use sdl2::EventPump;
 use sdl2::render::Canvas;
 use sdl2::video::Window;
 
-use crate::maths::{scale_vec3, rotate};
+use crate::maths::{scalair, rotate};
 use crate::wavefront_parser;
 use crate::{misc::*, edge_function::EdgeFunc};
 use crate::projection::projection;
@@ -21,15 +21,13 @@ pub fn gameloop(canvas: &mut Canvas<Window>, _event_pump: &mut EventPump, _sdl_c
   
 
     let data_cube = wavefront_parser::load("./res/cube.obj");
-    let mut cube_vertives = data_cube.0;
+    let mut cube_vertices = data_cube.0;
 
+    for i in 0..cube_vertices.len() {
 
-    for i in 0..cube_vertives.len() {
-
-        cube_vertives[i] = scale_vec3(cube_vertives[i], 100.0);
+        cube_vertices[i] = scalair(cube_vertices[i], 100.0);
         
     }
-
 
 
     loop 
@@ -42,13 +40,12 @@ pub fn gameloop(canvas: &mut Canvas<Window>, _event_pump: &mut EventPump, _sdl_c
 
 
 
-        cube_vertives = rotate(cube_vertives, 0.1, 'x');
-        cube_vertives = rotate(cube_vertives, 0.1, 'y');
+        cube_vertices = rotate(cube_vertices, 3.1415 / 180.0, 'x');
+        cube_vertices = rotate(cube_vertices, 3.1415 / 180.0, 'y');
 
 
 
-        let for_projection = EdgeFunc::draw(&cube_vertives, &data_cube.1);
-
+        let for_projection = EdgeFunc::draw(&cube_vertices, &data_cube.1, &data_cube.2);
 
         projection(for_projection, canvas);
         canvas.present();

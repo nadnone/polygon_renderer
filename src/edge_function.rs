@@ -1,13 +1,11 @@
-use crate::maths::{soustraction_vectors, cross_product_vec3, dot};
-
-
+use crate::{shader, maths::{produit_scalair, produit_vectoriel, soustraction_vectors}};
 
 pub struct EdgeFunc;
 
 
 impl EdgeFunc {
 
-    pub fn draw(m: &Vec<[f32; 3]>, colors: &Vec<[u8; 3]>) -> Vec<(f32, f32, f32, [u8; 3])>
+    pub fn draw(m: &Vec<[f32; 3]>, normals: &Vec<[f32; 3]>, phong_data: &(Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>)) -> Vec<(f32, f32, f32, [u8; 3])>
     {
 
         let mut m_out: Vec<(f32, f32, f32, [u8; 3])> = Vec::new();
@@ -26,7 +24,7 @@ impl EdgeFunc {
 
 
             /* backface check */
-            let backtest = dot( cross_product_vec3( soustraction_vectors(v1, v0), soustraction_vectors(v2, v0) ), v0 );
+            let backtest = produit_scalair( produit_vectoriel( soustraction_vectors(v1, v0), soustraction_vectors(v2, v0) ), v0 );
             if backtest < 0.0 { continue };
 
 
@@ -41,17 +39,12 @@ impl EdgeFunc {
 
 
                     // check if pixel is inside triangle
-                    let mut inside_triangle = true;
-
-                    inside_triangle &= Self::_edge_check(p, v0, v1);
-                    inside_triangle &= Self::_edge_check(p, v1, v2);
-                    inside_triangle &= Self::_edge_check(p, v2, v0);
-
-                    if inside_triangle 
+                    if Self::_is_in_triangle(p, v0, v1, v2) 
                     {
-                        let [r, g, b] = colors[0];
+                        
+                        let rgb = shader::shader_phong(normals, v0, phong_data, i);
 
-                        m_out.push((px as f32, py as f32, v0[2], [r, g, b]))
+                        m_out.push((px as f32, py as f32, v0[2], rgb));
                     }
       
                 }
@@ -65,39 +58,38 @@ impl EdgeFunc {
 
     }
 
-    fn _edge_check(p: [f32; 3], a: [f32; 3], b: [f32; 3]) -> bool
+    fn _is_in_triangle(p: [f32; 3], a: [f32; 3], b: [f32; 3], c: [f32; 3]) -> bool
     {
+        // positifs
+        let mut check_pos = true;
+        check_pos &= Self::_edge_check(p, c, a) > 0.0;
+        check_pos &= Self::_edge_check(p, a, b) > 0.0;
+        check_pos &= Self::_edge_check(p, b, c) > 0.0;
 
-        let delta_ab = soustraction_vectors(b, a);
-        let delta_ap = soustraction_vectors(p, a);
+        // negatifs
+        let mut check_neg = true;
+        check_neg &= Self::_edge_check(p, c, a) < 0.0;
+        check_neg &= Self::_edge_check(p, a, b) < 0.0;
+        check_neg &= Self::_edge_check(p, a, c) < 0.0;
 
-        let cross = cross_product_vec3(delta_ab, delta_ap)[2];
-
-        return cross < 0.0;
         
+        return check_pos | check_neg; 
+
+    }
+
+    fn _edge_check(p: [f32; 3], a: [f32; 3], b: [f32; 3]) -> f32
+    {
+        // calcul du determinant
+        return (a[0] - p[0]) * (b[1] - p[1]) - (a[1] - p[1]) * (b[0] - p[0]);
     }
 
     fn _check_min_max(v0: [f32; 3], v1: [f32; 3], v2: [f32; 3]) -> (i32, i32, i32, i32)
     {
-        let mut max_x = 0.0;
-        let mut min_x = 0.0;
+        let max_x = *vec![v0[0] as i32, v1[0] as i32, v2[0] as i32].iter().max().unwrap();
+        let min_x = *vec![v0[0] as i32, v1[0] as i32, v2[0] as i32].iter().min().unwrap();
 
-        let mut max_y = 0.0;
-        let mut min_y = 0.0;
-
-        if v0[0] < v1[0] { max_x = v1[0]; }
-        if max_x < v2[0] { max_x = v2[0]; }
-
-        if v0[0] > v1[0] { min_x = v1[0]; }
-        if min_x > v2[0] { min_x = v2[0]; }
-
-
-        if v0[1] < v1[1] { max_y = v1[1]; }
-        if max_y < v2[1] { max_y = v2[1]; }
-
-        if v0[1] > v1[1] { min_y = v1[1]; }
-        if min_y > v2[1] { min_y = v2[1]; }
-
+        let max_y = *vec![v0[1] as i32, v1[1] as i32, v2[1] as i32].iter().max().unwrap();
+        let min_y = *vec![v0[1] as i32, v1[1] as i32, v2[1] as i32].iter().min().unwrap();
 
         return (min_x as i32, max_x as i32, min_y as i32, max_y as i32)
     }

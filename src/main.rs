@@ -5,6 +5,7 @@ mod edge_function;
 mod maths;
 mod projection;
 mod wavefront_parser;
+mod shader;
 
 use crate::{gameloop::gameloop, misc::*};
 
@@ -28,7 +29,7 @@ pub fn main()
     let mut canvas = wind.into_canvas().build().unwrap();
     let mut event_pump = sdl_context.event_pump().unwrap();
 
-    canvas.set_logical_size(HALF_WIDTH as u32, HALF_HEIGHT as u32).unwrap();
+    canvas.set_logical_size(WIDTH_LOGIC as u32, HEIGHT_LOGIC as u32).unwrap();
 
     println!("Start!");
     gameloop(&mut canvas, &mut event_pump, &mut sdl_context);
