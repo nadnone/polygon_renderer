@@ -1,4 +1,4 @@
-# Rust 3D polygons engine :)
+# Rust 3D polygons engine :) (for learning)
 
 1. Work with the Phong model shader
 2. Only with wavefront obj files
@@ -12,8 +12,12 @@
     - [x] Specular, ambient, diffuse
     - [x] Vertices
     - [x] Normals
+    - [ ] Textures
 
 - [x] Shading with Phong model
+    - [ ] Textures
+    - [x] Ambient, diffuse, specular
+    
 - [ ] Using GPU instead of CPU
 - [ ] Moving through the world
 - [ ] Texture mapping
