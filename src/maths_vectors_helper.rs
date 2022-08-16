@@ -74,9 +74,9 @@ pub fn rotate(a: Vec<[f32; 3]>, angle: f32, axe: char) -> Vec<[f32; 3]>
     if axe == 'y'
     {
         matrix_rot = [
-            [cos, -sin, 0.0],
-            [sin, cos, 0.0],
-            [0.0, 0.0, 1.0]
+            [cos, 0.0, sin],
+            [0.0, 1.0, 0.0],
+            [-sin, 0.0, cos]
         ];
     }
     else if axe == 'x'
@@ -87,7 +87,7 @@ pub fn rotate(a: Vec<[f32; 3]>, angle: f32, axe: char) -> Vec<[f32; 3]>
             [0.0, sin, cos]
         ];
     }
-    else 
+    else // z
     {
         matrix_rot = [
             [cos, -sin, 0.0],

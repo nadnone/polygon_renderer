@@ -1,9 +1,9 @@
-use crate::{shader, maths::{produit_scalair, produit_vectoriel, soustraction_vectors}};
+use crate::{shader, maths_vectors_helper::{produit_scalair, produit_vectoriel, soustraction_vectors}};
 
-pub struct EdgeFunc;
+pub struct Rasterizer;
 
 
-impl EdgeFunc {
+impl Rasterizer {
 
     pub fn draw(m: &Vec<[f32; 3]>, normals: &Vec<[f32; 3]>, phong_data: &(Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>)) -> Vec<(f32, f32, f32, [u8; 3])>
     {
@@ -24,8 +24,8 @@ impl EdgeFunc {
 
 
             /* backface check */
-            let backtest = produit_scalair( produit_vectoriel( soustraction_vectors(v1, v0), soustraction_vectors(v2, v0) ), v0 );
-            if backtest < 0.0 { continue };
+            //let backtest = produit_scalair( produit_vectoriel( soustraction_vectors(v1, v0), soustraction_vectors(v2, v0) ), v0 );
+            //if backtest < 0.0 { continue };
 
 
 
@@ -42,7 +42,7 @@ impl EdgeFunc {
                     if Self::_is_in_triangle(p, v0, v1, v2) 
                     {
                         
-                        let rgb = shader::shader_phong(normals, v0, phong_data, i);
+                        let rgb = shader::shader_phong(normals, p, phong_data, i);
 
                         m_out.push((px as f32, py as f32, v0[2], rgb));
                     }

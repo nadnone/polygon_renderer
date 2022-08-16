@@ -1,33 +1,33 @@
-use crate::maths::*;
+use crate::maths_vectors_helper::*;
 
 pub fn shader_phong(normals: &Vec<[f32; 3]>, v0: [f32; 3], phong_data: &(Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>), i: usize) -> [u8; 3]
 {
     // diffuse
-    let norm = normaliser(normals[i]);
-    let light = [255.0, 255.0, 255.0];
-    let light_dir = normaliser(soustraction_vectors([50.0, -200.0, 50.0], v0));
+    let norm = normals[i];
+    let light = [10.0, 1.8, 1.5];
+    let light_dir = normaliser(soustraction_vectors([0.0, 600.0, 0.0], v0));
 
-    let scalair_diff = produit_vectoriel(norm, light_dir); // L . N
-    let diffuse = produit_vectoriel(light, scalair_diff); // I v K
+    let diff = produit_vectoriel(norm, light_dir); // L . N
+    let diffuse = produit_vectoriel(light, diff); // I v K
 
     // ambient                        
     let ambient = produit_vectoriel(light, phong_data.0[0]);
 
-    // specular
-    // A REVOIR
 
-    let cam_pos = normaliser([0.0, 0.0, -150.0]);
+    // specular
+    let cam_pos = normaliser(normaliser([0.0, 0.0, 100.0]));
     let r = scalair(reflect(light_dir, cam_pos), -1.0);
     
 
 
     let spec_diff = produit_scalair(light, phong_data.2[0]); // V.R
-    let spec_rv = produit_vectoriel(r, normals[i]);
+    let spec_rv = produit_vectoriel(r,  norm); // R v N
     let specular = scalair(spec_rv, spec_diff);
     
 
-    let mut phong = addition_vectors(phong_data.1[0], produit_vectoriel(diffuse, ambient));
+    let mut phong = addition_vectors(diffuse, ambient);
         phong = addition_vectors(phong, specular);    
+        phong = produit_vectoriel(phong, phong_data.1[0]);
 
     let r = phong[0] * 255.0;
     let g = phong[1] * 255.0;

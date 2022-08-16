@@ -1,13 +1,13 @@
 
-mod misc;
+mod constants;
 mod gameloop;
-mod edge_function;
-mod maths;
+mod rasterizer;
+mod maths_vectors_helper;
 mod projection;
 mod wavefront_parser;
 mod shader;
 
-use crate::{gameloop::gameloop, misc::*};
+use crate::{gameloop::gameloop, constants::*};
 
 
 pub fn main()

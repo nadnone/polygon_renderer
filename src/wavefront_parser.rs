@@ -92,7 +92,7 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (Vec<[f32; 3]>, Ve
     */
 
     // the materials and the mtl file
-    let mut re_1 = Regex::new(r"mtllib\s([a-z\.0-9A-Z]+)").unwrap().find(str).unwrap();
+    let mut re_1 = Regex::new(r"mtllib\s(.*)").unwrap().find(str).unwrap();
     let mtl_filename = &data[re_1.start()+7..re_1.end()];
 
 
@@ -159,7 +159,7 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (Vec<[f32; 3]>, Ve
     let pwd = filename.replace(obj_name, "");
 
     // read the mtl file
-    data = fs::read_to_string(format!("{}/{}", pwd, mtl_filename)).unwrap();
+    data = fs::read_to_string(format!("./assets/{}", mtl_filename)).unwrap();
     str = &data[..];
 
 
