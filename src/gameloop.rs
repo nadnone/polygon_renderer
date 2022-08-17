@@ -11,13 +11,12 @@ pub fn gameloop(canvas: &mut Canvas<Window>, event_pump: &mut EventPump, _sdl_co
 {
 
 
-    let data_cube = wavefront_parser::load("./assets/plane_animation.obj");
+    let data_cube = wavefront_parser::load("./assets/cube.obj");
     let mut cube_vertices = data_cube.0;
 
     for i in 0..cube_vertices.len() {
 
-        cube_vertices[i] = scalair(cube_vertices[i], 250.0);
-        cube_vertices[i][1] -= 350.0;
+        cube_vertices[i] = scalair(cube_vertices[i], 150.0);
         
     }
 
@@ -42,7 +41,7 @@ pub fn gameloop(canvas: &mut Canvas<Window>, event_pump: &mut EventPump, _sdl_co
 
 
         // colorisation
-        let for_projection = Rasterizer::draw(&cube_vertices, &data_cube.1, &data_cube.2);
+        let for_projection = Rasterizer::draw(&cube_vertices, &data_cube.1,&data_cube.2);
 
         // projection
         projection(for_projection, canvas);

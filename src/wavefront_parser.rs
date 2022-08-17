@@ -15,7 +15,7 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (Vec<[f32; 3]>, Ve
 
     let mut vertices_indices: Vec<[i32; 3]> = Vec::new();
     let mut normals_indices: Vec<[i32; 3]> = Vec::new();
-    //let mut textures_indices: Vec<[i32; 3]> = Vec::new();
+    let mut textures_indices: Vec<[i32; 3]> = Vec::new();
 
     for capture in re.captures_iter(str) {
 
@@ -26,13 +26,13 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (Vec<[f32; 3]>, Ve
 
         vertices_indices.push([v1, v2, v3]);
 
-        /* 
+        
         let t1: i32 = capture[2].to_string().parse().unwrap();
         let t2: i32 = capture[5].to_string().parse().unwrap();
         let t3: i32 = capture[8].to_string().parse().unwrap();
 
         textures_indices.push([t1, t2, t3]);
-        */
+        
 
         let n1: i32 = capture[3].to_string().parse().unwrap();
         let n2: i32 = capture[6].to_string().parse().unwrap();
@@ -75,7 +75,7 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (Vec<[f32; 3]>, Ve
 
 
 
-    /*
+    
     // capture the textures coordinates
     re = Regex::new(r"vt\s([0-9\.\-]+)\s([0-9\.\-]+)").unwrap();
 
@@ -89,7 +89,7 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (Vec<[f32; 3]>, Ve
         textures_coordinates_mess.push([t1, t2]);
 
     }
-    */
+    
 
     // the materials and the mtl file
     let mut re_1 = Regex::new(r"mtllib\s(.*)").unwrap().find(str).unwrap();
@@ -130,7 +130,7 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (Vec<[f32; 3]>, Ve
     }
     
 
-/*
+
     // textures coordinates
     let mut triangles_colors_coordinates: Vec<[f32; 2]> = Vec::new();
 
@@ -145,7 +145,7 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (Vec<[f32; 3]>, Ve
 
     }
 
-*/
+
 
 
 
@@ -195,7 +195,7 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (Vec<[f32; 3]>, Ve
     }
     
 
-    // the materials and the mtl file
+    // the specular exponent and the mtl file
     re_1 = Regex::new(r"Ns\s([0-9\.]+)").unwrap().find(str).unwrap();
     let string_stuff = &data[re_1.start()+3..re_1.end()];
     let specular_exponent: f32 = string_stuff.to_string().parse().unwrap();
@@ -220,8 +220,6 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (Vec<[f32; 3]>, Ve
     }
 
 
-
     return (triangles, normals, (ambiants, diffuse, specular, specular_exponent));
-
 
 }

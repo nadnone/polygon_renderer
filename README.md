@@ -18,8 +18,8 @@
     - [ ] Textures
     - [x] Ambient, diffuse, specular
     
-- ~~Using GPU instead of CPU~~
-- ~~Moving through the world~~
+- [ ] ~~Using GPU instead of CPU~~
+- [ ] ~~Moving through the world~~
 - [ ] Texture mapping
 ----------------------
 

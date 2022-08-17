@@ -7,7 +7,7 @@ pub fn shader_phong(normals: &Vec<[f32; 3]>, v0: [f32; 3], phong_data: &(Vec<[f3
 
     let light = [1.,1.,1.];
     
-    let light_dir = normaliser(soustraction_vectors([0.0, 200.0, 50.0], v0));
+    let light_dir = normaliser(soustraction_vectors([0.0, 50.0, -50.0], v0));
 
     let diff = produit_scalair(norm, light_dir);
     let diffuse = scalair(phong_data.1[0], diff); 
@@ -17,7 +17,7 @@ pub fn shader_phong(normals: &Vec<[f32; 3]>, v0: [f32; 3], phong_data: &(Vec<[f3
 
 
     // specular
-    let cam_pos = normaliser([0.0, 0.0, -50.0]);
+    let cam_pos = normaliser([1.0, 1.0, 1.0]);
     let cam_dir = normaliser(soustraction_vectors(cam_pos, v0));
     let reflect_dir = reflect(light_dir, norm);
 
