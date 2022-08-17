@@ -11,7 +11,7 @@ pub fn gameloop(canvas: &mut Canvas<Window>, event_pump: &mut EventPump, _sdl_co
 {
 
 
-    let data_cube = wavefront_parser::load("./assets/cat.obj");
+    let data_cube = wavefront_parser::load("./assets/plane_animation.obj");
     let mut cube_vertices = data_cube.0;
 
     for i in 0..cube_vertices.len() {
@@ -22,7 +22,8 @@ pub fn gameloop(canvas: &mut Canvas<Window>, event_pump: &mut EventPump, _sdl_co
     }
 
     cube_vertices = rotate(cube_vertices, 3.1415, 'z');
-    cube_vertices = rotate(cube_vertices, -90.0 * 3.1415 / 180.0, 'y');
+    cube_vertices = rotate(cube_vertices, 15.0 * 3.1415 / 180.0, 'x');
+    cube_vertices = rotate(cube_vertices, 45.0 * 3.1415 / 180.0, 'y');
 
     loop 
     {

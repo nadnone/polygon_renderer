@@ -9,7 +9,7 @@
 - [x] Drawing a cube
 - [ ] Load Wavefront files
     - [ ] Loading all data
-    - [x] Specular, ambient, diffuse
+    - [x] Ambient, diffuse, diffuse
     - [x] Vertices
     - [x] Normals
     - [ ] Textures
@@ -18,8 +18,8 @@
     - [ ] Textures
     - [x] Ambient, diffuse, specular
     
-- [ ] Using GPU instead of CPU
-- [ ] Moving through the world
+- ~~Using GPU instead of CPU~~
+- ~~Moving through the world~~
 - [ ] Texture mapping
 ----------------------
 
@@ -27,6 +27,6 @@
 | ----------------- | -------------------- |
 | <img height="300" width="300" src="./res/cube_first.gif"> | <img height="300" width="300" src="./res/cube_specular.gif"> |
 
-| Airplane failed test | Cat test success |
+| Airplane failed test | Airplane test success |
 | --------------------- | ---------------- |
-| <img height="300" width="300" src="./res/airplane.gif"> | <img height="300" width="300" src="./res/cat_shader_success.gif"> |
+| <img height="300" width="300" src="./res/airplane.gif"> | <img height="300" width="300" src="./res/airplane_success.gif"> |
