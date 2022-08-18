@@ -11,18 +11,17 @@ pub fn gameloop(canvas: &mut Canvas<Window>, event_pump: &mut EventPump, _sdl_co
 {
 
 
-    let data_cube = wavefront_parser::load("./assets/cube.obj");
-    let mut cube_vertices = data_cube.0;
+    let mut data_cube = wavefront_parser::load("./assets/cube.obj");
 
-    for i in 0..cube_vertices.len() {
+    for i in 0..data_cube.0.len() {
 
-        cube_vertices[i] = scalair(cube_vertices[i], 150.0);
+        data_cube.0[i] = scalair(data_cube.0[i], 150.0);
         
     }
 
-    cube_vertices = rotate(cube_vertices, 3.1415, 'z');
-    cube_vertices = rotate(cube_vertices, 15.0 * 3.1415 / 180.0, 'x');
-    cube_vertices = rotate(cube_vertices, 45.0 * 3.1415 / 180.0, 'y');
+    //data_cube.0 = rotate(&data_cube.0, 3.1415, 'z');
+    //data_cube.0 = rotate(&data_cube.0, 15.0 * 3.1415 / 180.0, 'x');
+    //data_cube.0 = rotate(&data_cube.0, 45.0 * 3.1415 / 180.0, 'y');
 
     loop 
     {
@@ -35,16 +34,17 @@ pub fn gameloop(canvas: &mut Canvas<Window>, event_pump: &mut EventPump, _sdl_co
 
 
         // transformations
-        //cube_vertices = rotate(cube_vertices, 3.1415 / 180.0, 'x');
-        cube_vertices = rotate(cube_vertices, 2. * 3.1415 / 180.0, 'y');
-        //cube_vertices = rotate(cube_vertices, 3.1415 / 180.0, 'z');
+        //data_cube.0 = rotate(&data_cube.0, 3.1415 / 180.0, 'x');
+        data_cube.0 = rotate(&data_cube.0, 2. * 3.1415 / 180.0, 'y');
+        data_cube.0 = rotate(&data_cube.0, 3.1415 / 180.0, 'z');
 
 
         // colorisation
-        let for_projection = Rasterizer::draw(&cube_vertices, &data_cube.1,&data_cube.2);
+        let for_projection = Rasterizer::draw(&mut data_cube);
 
         // projection
-        projection(for_projection, canvas);
+        projection(for_projection.0, for_projection.1, canvas);
+
 
         // affichage
         canvas.present();

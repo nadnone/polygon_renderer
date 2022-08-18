@@ -35,12 +35,12 @@ pub fn shader_phong(normals: &Vec<[f32; 3]>, v0: [f32; 3], phong_data: &(Vec<[f3
 
 
 
-    let r = phong[0] * 255.;
-    let g = phong[1] * 255.;
-    let b = phong[2] * 255.;
+    let r_out = phong[0] as u8;
+    let g_out = phong[1] as u8;
+    let b_out = phong[2] as u8;
 
 
-    return [r as u8, g as u8, b as u8];
+    return [r_out, g_out, b_out];
 }
 
 fn reflect(light_dir: [f32; 3], normal: [f32; 3]) -> [f32; 3]

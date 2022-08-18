@@ -64,7 +64,12 @@ pub fn scalair(a: [f32; 3], factor: f32) -> [f32; 3]
     return res;
 }
 
-pub fn rotate(a: Vec<[f32; 3]>, angle: f32, axe: char) -> Vec<[f32; 3]>
+pub fn _angle_between_vectors(a: [f32;3], b: [f32; 3]) -> f32
+{
+    return produit_scalair(a, b) / (norme(a) * norme(b));
+}
+
+pub fn rotate(a: &Vec<[f32; 3]>, angle: f32, axe: char) -> Vec<[f32; 3]>
 {
 
     let cos = angle.cos();

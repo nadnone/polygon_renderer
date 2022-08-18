@@ -1,3 +1,5 @@
+use image::{DynamicImage, GenericImageView};
+
 use crate::shader;
 
 pub struct Rasterizer;
@@ -5,10 +7,19 @@ pub struct Rasterizer;
 
 impl Rasterizer {
 
-    pub fn draw(m: &Vec<[f32; 3]>, normals: &Vec<[f32; 3]>, phong_data: &(Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>, f32)) -> Vec<(f32, f32, f32, [u8; 3])>
+    pub fn draw(data: &mut (Vec<[f32; 3]>, Vec<[f32; 3]>, (DynamicImage, Vec<[f32; 2]>), (Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>, f32))) -> (Vec<[f32; 3]>, Vec<[u8;3]>)
     {
+        let mut m_out: (Vec<[f32; 3]>, Vec<[u8; 3]>) = (Vec::new(), Vec::new());
 
-        let mut m_out: Vec<(f32, f32, f32, [u8; 3])> = Vec::new();
+
+
+        let m = &mut data.0;
+        let normals = &data.1;
+        let image_texture_data = &data.2;
+        let phong_data = &data.3;
+
+        let image_texture = &image_texture_data.0;
+        let _image_texture_coordinates = &image_texture_data.1;
 
         for i in (0..m.len()).step_by(3) {
             
@@ -37,9 +48,30 @@ impl Rasterizer {
                     if Self::_is_in_triangle(p, v0, v1, v2) 
                     {
 
-                        let rgb_phong = shader::shader_phong(normals, p, phong_data, i);
 
-                        m_out.push((px as f32, py as f32, v0[2], rgb_phong));
+                        // A REVOIR (texture mapping)
+
+                        let mut rel_px = (px - min_x) as f32 / (max_x - min_x) as f32;
+                        let mut rel_py = (py - min_y) as f32 / (max_y - min_y) as f32;
+ 
+                        rel_px *= image_texture.width() as f32 - 1.0;
+                        rel_py *= image_texture.height() as f32 - 1.0;
+
+
+
+                        // texels
+                        let tx = rel_px as u32;
+                        let ty = rel_py  as u32;
+
+                        let r = image_texture.get_pixel(tx, ty)[0];
+                        let g = image_texture.get_pixel(tx, ty)[1];
+                        let b = image_texture.get_pixel(tx, ty)[2];
+
+                        
+                        let _rgb_phong = shader::shader_phong(normals, p, phong_data, i);
+
+                        m_out.0.push([px as f32, py as f32, v0[2]]);
+                        m_out.1.push([r, g, b]);
                     }
       
                 }
@@ -50,7 +82,6 @@ impl Rasterizer {
         }
 
         return m_out;
-
     }
 
     fn _is_in_triangle(p: [f32; 3], a: [f32; 3], b: [f32; 3], c: [f32; 3]) -> bool
