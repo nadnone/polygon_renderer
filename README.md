@@ -9,7 +9,7 @@
 - [x] Drawing a cube
 - [ ] Load Wavefront files
     - [ ] Loading all data
-    - [x] Ambient, diffuse, diffuse
+    - [x] Ambient, diffuse, ~~specular~~
     - [x] Vertices
     - [x] Normals
     - [ ] Textures
@@ -23,10 +23,10 @@
         - [ ] Draw it correctly 
         - [ ] Understand how to draw it correctly
 
-    - [x] Ambient, diffuse, specular
+    - [ ] Ambient, diffuse, specular
     
 - [ ] ~~Using GPU instead of CPU~~
-- [ ] Moving through the world
+- [ ] ~~Moving through the world~~
 ----------------------
 
 | First shader | Specular shading |

@@ -11,7 +11,7 @@ pub fn gameloop(canvas: &mut Canvas<Window>, event_pump: &mut EventPump, _sdl_co
 {
 
 
-    let mut data_cube = wavefront_parser::load("./assets/cube.obj");
+    let mut data_cube = wavefront_parser::load("./assets/plane_animation.obj");
 
     for i in 0..data_cube.0.len() {
 
@@ -19,9 +19,9 @@ pub fn gameloop(canvas: &mut Canvas<Window>, event_pump: &mut EventPump, _sdl_co
         
     }
 
-    //data_cube.0 = rotate(&data_cube.0, 3.1415, 'z');
-    //data_cube.0 = rotate(&data_cube.0, 15.0 * 3.1415 / 180.0, 'x');
-    //data_cube.0 = rotate(&data_cube.0, 45.0 * 3.1415 / 180.0, 'y');
+    data_cube.0 = rotate(&data_cube.0, 3.1415, 'z');
+    data_cube.0 = rotate(&data_cube.0, 15.0 * 3.1415 / 180.0, 'x');
+    data_cube.0 = rotate(&data_cube.0, 45.0 * 3.1415 / 180.0, 'y');
 
     loop 
     {

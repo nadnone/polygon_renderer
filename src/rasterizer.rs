@@ -7,7 +7,7 @@ pub struct Rasterizer;
 
 impl Rasterizer {
 
-    pub fn draw(data: &mut (Vec<[f32; 3]>, Vec<[f32; 3]>, (DynamicImage, Vec<[f32; 2]>), (Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>, f32))) -> (Vec<[f32; 3]>, Vec<[u8;3]>)
+    pub fn draw(data: &mut (Vec<[f32; 3]>, Vec<[f32; 3]>, /*(DynamicImage, Vec<[f32; 2]>),*/ (Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>, f32))) -> (Vec<[f32; 3]>, Vec<[u8;3]>)
     {
         let mut m_out: (Vec<[f32; 3]>, Vec<[u8; 3]>) = (Vec::new(), Vec::new());
 
@@ -15,11 +15,11 @@ impl Rasterizer {
 
         let m = &mut data.0;
         let normals = &data.1;
-        let image_texture_data = &data.2;
-        let phong_data = &data.3;
+        //let image_texture_data = &data.2;
+        let phong_data = &data.2;
 
-        let image_texture = &image_texture_data.0;
-        let _image_texture_coordinates = &image_texture_data.1;
+        //let image_texture = &image_texture_data.0;
+        //let _image_texture_coordinates = &image_texture_data.1;
 
         for i in (0..m.len()).step_by(3) {
             
@@ -50,7 +50,7 @@ impl Rasterizer {
 
 
                         // A REVOIR (texture mapping)
-
+                        /*
                         let mut rel_px = (px - min_x) as f32 / (max_x - min_x) as f32;
                         let mut rel_py = (py - min_y) as f32 / (max_y - min_y) as f32;
  
@@ -67,11 +67,11 @@ impl Rasterizer {
                         let g = image_texture.get_pixel(tx, ty)[1];
                         let b = image_texture.get_pixel(tx, ty)[2];
 
-                        
-                        let _rgb_phong = shader::shader_phong(normals, p, phong_data, i);
+                        */
+                        let rgb_phong = shader::shader_phong(normals, p, phong_data, i);
 
                         m_out.0.push([px as f32, py as f32, v0[2]]);
-                        m_out.1.push([r, g, b]);
+                        m_out.1.push(rgb_phong);
                     }
       
                 }

@@ -3,7 +3,7 @@ use regex::Regex;
 use image::{self, DynamicImage};
 
 
-pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (DynamicImage, Vec<[f32; 2]>), (Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>, f32))
+pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>,/* (DynamicImage, Vec<[f32; 2]>),*/ (Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>, f32))
 {
 
     let mut data = fs::read_to_string(filename).unwrap();
@@ -222,6 +222,7 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (DynamicImage, Vec
 
 
     // the image texture in the mtl file
+    /*
     re_1 = Regex::new(r"map_Kd\s(.*)\.\w+").unwrap().find(str).unwrap();
     let file_image_name = &data[re_1.start()+7..re_1.end()];
     let ifimage = image::io::Reader::open(format!("./assets/{}",file_image_name));
@@ -236,9 +237,9 @@ pub fn load(filename: &str) -> (Vec<[f32; 3]>, Vec<[f32; 3]>, (DynamicImage, Vec
     {
         println!("can't find image texture");
     }
+    */
 
 
-
-    return (triangles, normals, (image_data, triangles_texture_coordinates), (ambiants, diffuse, specular, specular_exponent));
+    return (triangles, normals,/* (image_data, triangles_texture_coordinates),*/ (ambiants, diffuse, specular, specular_exponent));
 
 }
