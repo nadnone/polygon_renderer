@@ -5,7 +5,7 @@ mod rasterizer;
 mod maths_vectors_helper;
 mod projection;
 mod wavefront_parser;
-mod shader;
+mod pseudo_shader;
 
 use crate::{gameloop::gameloop, constants::*};
 

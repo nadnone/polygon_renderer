@@ -1,6 +1,6 @@
-use image::{DynamicImage, GenericImageView};
+//use image::{DynamicImage, GenericImageView};
 
-use crate::shader;
+use crate::pseudo_shader;
 
 pub struct Rasterizer;
 
@@ -68,7 +68,7 @@ impl Rasterizer {
                         let b = image_texture.get_pixel(tx, ty)[2];
 
                         */
-                        let rgb_phong = shader::shader_phong(normals, p, phong_data, i);
+                        let rgb_phong = pseudo_shader::pseudo_shader(normals, p, phong_data, i);
 
                         m_out.0.push([px as f32, py as f32, v0[2]]);
                         m_out.1.push(rgb_phong);

@@ -1,6 +1,6 @@
 use crate::maths_vectors_helper::*;
 
-pub fn shader_phong(normals: &Vec<[f32; 3]>, v0: [f32; 3], color_data: &(Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>, f32), i: usize) -> [u8; 3]
+pub fn pseudo_shader(normals: &Vec<[f32; 3]>, v0: [f32; 3], color_data: &(Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>, f32), i: usize) -> [u8; 3]
 {
 
     let norm = normaliser(normals[i]);
