@@ -1,19 +1,18 @@
 //use image::{DynamicImage, GenericImageView};
+use sdl2::render::Canvas;
+use sdl2::video::Window;
 
-use crate::pseudo_shader;
+use crate::{pseudo_shader, constants::{WIDTH_LOGIC, HEIGHT_LOGIC}};
 
 pub struct Rasterizer;
 
 
 impl Rasterizer {
 
-    pub fn draw(data: &mut (Vec<[f32; 3]>, Vec<[f32; 3]>, /*(DynamicImage, Vec<[f32; 2]>),*/ (Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>, f32))) -> (Vec<[f32; 3]>, Vec<[u8;3]>)
+    pub fn draw(canvas: &mut Canvas<Window>, data: &(Vec<[f32; 3]>, Vec<[f32; 3]>, /*(DynamicImage, Vec<[f32; 2]>),*/ (Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>, f32)))
     {
-        let mut m_out: (Vec<[f32; 3]>, Vec<[u8; 3]>) = (Vec::new(), Vec::new());
 
-
-
-        let m = &mut data.0;
+        let m = &data.0;
         let normals = &data.1;
         //let image_texture_data = &data.2;
         let phong_data = &data.2;
@@ -68,10 +67,11 @@ impl Rasterizer {
                         let b = image_texture.get_pixel(tx, ty)[2];
 
                         */
-                        let rgb_phong = pseudo_shader::pseudo_shader(normals, p, phong_data, i);
+                        let rgb = pseudo_shader::pseudo_shader(normals, p, phong_data, i);
 
-                        m_out.0.push([px as f32, py as f32, v0[2]]);
-                        m_out.1.push(rgb_phong);
+                        canvas.set_draw_color(sdl2::pixels::Color::RGB(rgb[0], rgb[1], rgb[2]));
+                        canvas.draw_point(sdl2::rect::Point::new(px as i32 + WIDTH_LOGIC /2, py as i32 + HEIGHT_LOGIC /2)).unwrap();
+
                     }
       
                 }
@@ -81,7 +81,6 @@ impl Rasterizer {
 
         }
 
-        return m_out;
     }
 
     fn _is_in_triangle(p: [f32; 3], a: [f32; 3], b: [f32; 3], c: [f32; 3]) -> bool
