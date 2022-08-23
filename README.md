@@ -1,8 +1,7 @@
 # Rust 3D polygons engine :) (for learning)
 
 1. Work with the Phong model shader
-2. Work only with wavefront obj files
-3. Don't use directly OpenGL, Vulkan or others 3D libraries
+2. Don't use directly OpenGL, Vulkan or others 3D libraries
 ----------------------
 ## TODO :D
 ----------------------
