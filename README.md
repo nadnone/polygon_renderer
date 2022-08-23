@@ -7,19 +7,12 @@
 ## TODO :D
 ----------------------
 - [x] Drawing a cube
-- [ ] Load Wavefront files
-    - [ ] Loading all data
-    - [x] Ambient, diffuse, ~~specular~~
-    - [x] Vertices
-    - [x] Normals
-    - [ ] Textures
-        - [x] Texture image
-        - [x] Texture Coordinates
-        - [ ] Understand how to match both
+- [x] ~~Load Wavefront files~~
+- [x] Load gltf/glb files
 
 - [ ] Shading with Phong model
     - [ ] Textures
-        - [x] Draw texture on cube
+        - [ ] Draw texture on cube
         - [ ] Draw it correctly 
         - [ ] Understand how to draw it correctly
 

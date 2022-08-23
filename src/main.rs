@@ -4,8 +4,9 @@ mod gameloop;
 mod rasterizer;
 mod maths_vectors_helper;
 mod projection;
-mod wavefront_parser;
+mod gltf_file_loader;
 mod pseudo_shader;
+mod transformations;
 
 use crate::{gameloop::gameloop, constants::*};
 

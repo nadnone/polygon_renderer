@@ -1,3 +1,5 @@
+use std::vec;
+
 //use image::{DynamicImage, GenericImageView};
 use sdl2::render::Canvas;
 use sdl2::video::Window;
@@ -9,16 +11,12 @@ pub struct Rasterizer;
 
 impl Rasterizer {
 
-    pub fn draw(canvas: &mut Canvas<Window>, data: &(Vec<[f32; 3]>, Vec<[f32; 3]>, /*(DynamicImage, Vec<[f32; 2]>),*/ (Vec<[f32; 3]>, Vec<[f32; 3]>, Vec<[f32; 3]>, f32)))
+    pub fn draw(canvas: &mut Canvas<Window>, data: &(Vec<[f32; 6]>, Vec<[f32; 3]>, Vec<[f32; 3]>))
     {
 
         let m = &data.0;
         let normals = &data.1;
-        //let image_texture_data = &data.2;
-        let phong_data = &data.2;
-
-        //let image_texture = &image_texture_data.0;
-        //let _image_texture_coordinates = &image_texture_data.1;
+        let color_data = &data.2;
 
         for i in (0..m.len()).step_by(3) {
             
@@ -31,8 +29,6 @@ impl Rasterizer {
             
             // to check less pixels at time
             let (min_x, max_x, min_y, max_y) = Self::_check_min_max(v0, v1, v2);
-
-
 
             for px in min_x..max_x+1 {
                 
@@ -48,26 +44,7 @@ impl Rasterizer {
                     {
 
 
-                        // A REVOIR (texture mapping)
-                        /*
-                        let mut rel_px = (px - min_x) as f32 / (max_x - min_x) as f32;
-                        let mut rel_py = (py - min_y) as f32 / (max_y - min_y) as f32;
- 
-                        rel_px *= image_texture.width() as f32 - 1.0;
-                        rel_py *= image_texture.height() as f32 - 1.0;
-
-
-
-                        // texels
-                        let tx = rel_px as u32;
-                        let ty = rel_py  as u32;
-
-                        let r = image_texture.get_pixel(tx, ty)[0];
-                        let g = image_texture.get_pixel(tx, ty)[1];
-                        let b = image_texture.get_pixel(tx, ty)[2];
-
-                        */
-                        let rgb = pseudo_shader::pseudo_shader(normals, p, phong_data, i);
+                        let rgb = pseudo_shader::pseudo_shader(normals, p, color_data, i);
 
                         canvas.set_draw_color(sdl2::pixels::Color::RGB(rgb[0], rgb[1], rgb[2]));
                         canvas.draw_point(sdl2::rect::Point::new(px as i32 + WIDTH_LOGIC /2, py as i32 + HEIGHT_LOGIC /2)).unwrap();
@@ -83,7 +60,7 @@ impl Rasterizer {
 
     }
 
-    fn _is_in_triangle(p: [f32; 3], a: [f32; 3], b: [f32; 3], c: [f32; 3]) -> bool
+    fn _is_in_triangle(p: [f32; 3], a: [f32; 6], b: [f32; 6], c: [f32; 6]) -> bool
     {
         // positifs
         let mut check_pos = true;
@@ -102,13 +79,13 @@ impl Rasterizer {
 
     }
 
-    fn _edge_check(p: [f32; 3], a: [f32; 3], b: [f32; 3]) -> f32
+    fn _edge_check(p: [f32; 3], a: [f32; 6], b: [f32; 6]) -> f32
     {
         // calcul du determinant
         return (a[0] - p[0]) * (b[1] - p[1]) - (a[1] - p[1]) * (b[0] - p[0]);
     }
 
-    fn _check_min_max(v0: [f32; 3], v1: [f32; 3], v2: [f32; 3]) -> (i32, i32, i32, i32)
+    fn _check_min_max(v0: [f32; 6], v1: [f32; 6], v2: [f32; 6]) -> (i32, i32, i32, i32)
     {
         let max_x = *vec![v0[0] as i32, v1[0] as i32, v2[0] as i32].iter().max().unwrap();
         let min_x = *vec![v0[0] as i32, v1[0] as i32, v2[0] as i32].iter().min().unwrap();

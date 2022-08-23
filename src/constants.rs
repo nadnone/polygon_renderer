@@ -12,3 +12,4 @@ pub const FPS: f32 = 1.0/60.0;
 pub const FOV: f32 = 68.0 * 3.1415 / 180.0;
 pub const LAMBDA: f32 = 100.0 / (100. - 1.); // F_FAR / (Z_FAR - Z_NEAR)
 
+pub const PI: f32 = 3.141592653589793;

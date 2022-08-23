@@ -1,6 +1,6 @@
 use crate::constants::*;
 
-pub fn projection(m: &mut Vec<[f32; 3]>)
+pub fn projection(m: &mut Vec<[f32; 6]>)
 {
 
     let f: f32 = (FOV/2.0).tan() / 2.0;
