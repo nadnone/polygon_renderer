@@ -10,7 +10,7 @@ pub fn pseudo_shader(normals: &Vec<[f32; 3]>, _v0: [f32; 3], color_data: &Vec<[f
 
     // Lambert diffuse model
     let intensity = produit_scalair(norm, light_pos); // N * L
-    let diffuse = scalair(color_data[i], intensity);
+    let diffuse = multiplication_par_scalair(color_data[i], intensity);
 
 
     // TODO specular 

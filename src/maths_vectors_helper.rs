@@ -32,7 +32,7 @@ pub fn norme(a: [f32; 3]) -> f32
 
 pub fn normaliser(a: [f32; 3]) -> [f32; 3]
 {
-    return scalair(a, 1.0/norme(a));
+    return multiplication_par_scalair(a, 1.0/norme(a));
 }
 
 pub fn _produit_vectoriel(a: [f32; 3], b: [f32; 3]) -> [f32; 3]
@@ -53,7 +53,7 @@ pub fn produit_scalair(a: [f32; 3], b :[f32; 3]) -> f32
 
 
 
-pub fn scalair(a: [f32; 3], factor: f32) -> [f32; 3]
+pub fn multiplication_par_scalair(a: [f32; 3], factor: f32) -> [f32; 3]
 {
     let mut res = [0.0, 0.0, 0.0];
 
